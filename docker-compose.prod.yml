@@ -1,0 +1,65 @@
+version: "3"
+
+services:
+  todo-postgres:
+    image: wmiler23/todo-postgres:1.0
+
+  todo-cache-ingestion:
+    build:
+      context: todo-cache-ingestion
+      dockerfile: ../Dockerfile.nodejs.prod
+    image: wmiler23/todo-cache-ingestion:1.0
+    
+  todo-cache-service:
+    build:
+      context: todo-cache-service
+      dockerfile: ../Dockerfile.nodejs.prod
+    image: wmiler23/todo-cache-service:1.0
+    
+  todo-search-ingestion:
+    build:
+      context: todo-search-ingestion
+      dockerfile: ../Dockerfile.nodejs.prod
+    image: wmiler23/todo-search-ingestion:1.0
+    command: sh /home/node/app/start.sh
+    
+  todo-search-service:
+    build:
+      context: todo-search-service
+      dockerfile: ../Dockerfile.nodejs.prod
+    image: wmiler23/todo-search-service:1.0
+    command: sh /home/node/app/start.sh
+    
+  todo-storage-ingestion:
+    build:
+      context: todo-storage-ingestion
+      dockerfile: ../Dockerfile.nodejs.prod
+    image: wmiler23/todo-storage-ingestion:1.0
+    command: sh /home/node/app/start.sh
+    
+
+  todo-storage-service:
+    build:
+      context: todo-storage-service
+      dockerfile: ../Dockerfile.nodejs.prod
+    image: wmiler23/todo-storage-service:1.0
+    
+
+  todo-api-gateway:
+    build:
+      dockerfile: ../Dockerfile.nodejs.prod
+    image: wmiler23/todo-api-gateway:1.0
+    command: sh /home/node/app/start.sh
+    
+
+  todo-view:
+    build:
+      dockerfile: Dockerfile.prod
+    image: wmiler23/todo-view:1.0
+    ports:
+      - 4201:9999
+    
+  todo-proxy:
+    image: wmiler23/todo-proxy:1.0
+    
+
