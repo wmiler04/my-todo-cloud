@@ -38,7 +38,7 @@ after_success:
   - docker-compose -f docker-compose.yml -f docker-compose.prod.yml build
  
   # Login to Docker Hub
-  - echo $DOCKER_HUB_PASSWORD | docker login -u $DOCKER_HUB_ID --password-stdin
+  - echo "$DOCKER_HUB_PASSWORD" | docker login -u "$DOCKER_HUB_ID" --password-stdin
  
   # Take the built production images and push to Docker Hub
   - docker-compose -f docker-compose.yml -f docker-compose.prod.yml push
